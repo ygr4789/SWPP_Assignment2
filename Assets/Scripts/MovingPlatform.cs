@@ -5,33 +5,26 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     public float patrolPeriod = 2.0f;
-    public float patrolDistance = 5.0f;
-    private bool moveRightFirst = true;
+    public Vector3 destinationOffest = 4.0f * Vector3.up;
 
-    private int dirX;
-    private float leftBound;
-    private float rightBound;
-    private float speed;
+    private float t;
+    private int increase = 1;
+    private Vector3 initialPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        dirX = moveRightFirst ? 1 : -1;
-        float initX = transform.position.x;
-        float lastX = initX + patrolDistance * dirX;
-        leftBound = Mathf.Min(initX, lastX);
-        rightBound = Mathf.Max(initX, lastX);
-        speed = patrolDistance / patrolPeriod;
+        initialPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float dx = Time.deltaTime * speed * dirX;
-        transform.position += new Vector3(dx, 0.0f, 0.0f);
+        t += (Time.deltaTime / patrolPeriod) * increase;
+        transform.position = initialPosition + t * destinationOffest;
 
         float x = transform.position.x;
-        if (x < leftBound) dirX = 1;
-        if (x > rightBound) dirX = -1;
+        if (t < 0) increase = 1;
+        if (t > 1) increase = -1;
     }
 }

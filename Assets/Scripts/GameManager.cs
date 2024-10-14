@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             if (collectedAllCoins)
             {
                 stage1Clear = true;
-                StartCoroutine(MoveOverSeconds(gate, new Vector3(0.0f, 5.0f, 0.0f), 3.0f));
+                StartCoroutine(MoveOverSeconds(gate, new Vector3(0.0f, 3.5f, 0.0f), 3.0f));
             }
         }
     }
